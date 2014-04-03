@@ -27,9 +27,8 @@ import java.util.ArrayList;
  */
 public class CityListFragment extends Fragment {
 
-    ArrayAdapter<String> adapter;
-    String list;
-    ArrayList<String> citiesList;
+    ArrayAdapter<String> adapter = null;
+    ArrayList<String> citiesList = new ArrayList<String>();
     View returnView;
 
     public CityListFragment() {
@@ -95,8 +94,9 @@ public class CityListFragment extends Fragment {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                list = RestClient.getCityList(id);
-                citiesList = Utils.parse(list);
+                String list = RestClient.getCityList(id);
+                citiesList.clear();
+                citiesList.addAll(Utils.parse(list));
 
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
@@ -110,9 +110,14 @@ public class CityListFragment extends Fragment {
     }
 
     private void populateList() {
-        adapter =  new ArrayAdapter<String>(getActivity(),
-                android.R.layout.simple_list_item_1, citiesList);
-        ((ListView) returnView.findViewById(R.id.cities_list)).setAdapter(adapter);
+        if (adapter == null) {
+            adapter =  new ArrayAdapter<String>(getActivity(),
+                    android.R.layout.simple_list_item_1, citiesList);
+            ((ListView) returnView.findViewById(R.id.cities_list)).setAdapter(adapter);
+        } else {
+            adapter.notifyDataSetChanged();
+        }
+
     }
 
     private void hideKeyboard() {
