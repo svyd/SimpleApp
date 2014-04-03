@@ -12,7 +12,7 @@ public class Utils {
 
         String[] citiesArray = response.split(",");
         for(String item : citiesArray) {
-            citiesList.add(item.split(":")[0]);
+            citiesList.add(item.split(":")[0].split("\"")[1]);
         }
 
         return citiesList;
