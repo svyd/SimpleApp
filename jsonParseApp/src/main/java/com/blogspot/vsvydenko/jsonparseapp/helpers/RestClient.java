@@ -20,10 +20,12 @@ public class RestClient {
     public static String getCityList(int id) {
 
         String cityList = null;
+        HttpURLConnection urlConnection = null;
 
         try {
             URL url = new URL(SERVER + id);
-            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection = (HttpURLConnection) url.openConnection();
+
             urlConnection.setRequestMethod("GET");
 
             urlConnection.setReadTimeout(10000);
@@ -39,9 +41,15 @@ public class RestClient {
 
     } catch (MalformedURLException e) {
         e.printStackTrace();
-    } catch (IOException e) {
+    }  catch (IOException e) {
         e.printStackTrace();
+    } finally {
+        if (urlConnection != null){
+            urlConnection.disconnect();
+        }
+
     }
-    return cityList;
+
+        return cityList;
     }
 }
