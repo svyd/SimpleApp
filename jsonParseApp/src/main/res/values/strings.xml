@@ -6,5 +6,6 @@
     <string name="action_settings">Settings</string>
 
     <string name="city_id_hint">Enter city id</string>
+    <string name="no_items">No cities</string>
 
 </resources>

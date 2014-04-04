@@ -96,7 +96,7 @@ public class CityListFragment extends Fragment {
             public void run() {
                 String list = RestClient.getCityList(id);
                 citiesList.clear();
-                citiesList.addAll(Utils.parse(list));
+                citiesList.addAll(Utils.parse(getActivity(), list));
 
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
